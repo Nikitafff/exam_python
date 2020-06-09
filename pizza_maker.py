@@ -2,6 +2,7 @@ from typing import Generator
 
 
 class Pizza:
+    """Blueprint for great pizzas"""
     base_ingredients: dict = {
         'dough': 100,
         'tomato paste': 50
@@ -12,11 +13,14 @@ class Pizza:
         return (attr for attr in dir(self) if not attr.startswith('_'))
 
     def __dict__(self):
+        """Create 1 dict from all ingredients"""
         attrs = (getattr(self, atr) for atr in self.__attrs__())
         return {key: val for d in attrs for key, val in d.items()}
 
     def __str__(self):
-        key_value = (f'{key} {value} г' for key, value in self.__dict__().items())
+        """Parse all ingredients into a string"""
+        atr_values = self.__dict__().items()
+        key_value = (f'{key} {value} г' for key, value in atr_values)
         return f'{self.__class__.__name__}: {", ".join(key_value)}'
 
 
@@ -40,4 +44,3 @@ class Hawaiian(Pizza):
         'cheese': 100,
         'pineapples': 100
     }
-
